@@ -67,7 +67,7 @@ public class AlphaController {
         return "a student";
     }
 
-    // POST请求 - get请求传递的参数是在url中的，而post是表单里的
+    // POST请求 - get请求传递的参数是在url中的，而post是表单里的 ---- 这里不知道为什么行不通
     @RequestMapping(path="/student", method=RequestMethod.POST)
     @ResponseBody
     public String saveStudent(String name, int age) {
