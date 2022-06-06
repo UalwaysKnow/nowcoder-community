@@ -32,7 +32,7 @@ public class LoginTicketIntercepter implements HandlerInterceptor {
             LoginTicket loginTicket = userService.findLoginTicket(ticket);
             if(loginTicket != null && loginTicket.getStatus() == 0 && loginTicket.getExpired().after(new Date())) {
                 // 根据凭证查询用户
-                User user = userService.findUserById(loginTicket.getId());
+                User user = userService.findUserById(loginTicket.getUserId());
                 // 在本次请求中持有用户 - 考虑并发情况，在多线程间隔离存储
                 hostHolder.setUser(user);
             }
