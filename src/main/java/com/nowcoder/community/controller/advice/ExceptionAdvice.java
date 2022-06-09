@@ -26,7 +26,7 @@ public class ExceptionAdvice {
         // 注意返回异步请求是返回JS
         String xRequestedWith = request.getHeader("x-requested-with");
         if ("XMLHttpRequest".equals(xRequestedWith)) {
-            response.setContentType("application/plain");
+            response.setContentType("application/plain;charset=utf-8");
             PrintWriter writer = response.getWriter();
             writer.write(CommunityUtil.getJSONString(1, "服务器发生异常"));
         } else {
