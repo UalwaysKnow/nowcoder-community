@@ -35,8 +35,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 @SpringBootTest
 @ContextConfiguration(classes = CommunityApplication.class)
@@ -243,6 +242,7 @@ public class ElasticSearchTest {
     @Test
     public void highlightQuery() throws Exception{
         SearchRequest searchRequest = new SearchRequest("discusspost");//discusspost是索引名，就是表名
+        Map<String,Object> res = new HashMap<>();
 
         //高亮
         HighlightBuilder highlightBuilder = new HighlightBuilder();
@@ -261,11 +261,10 @@ public class ElasticSearchTest {
                 .from(0)// 指定从哪条开始查询
                 .size(10)// 需要查出的总记录条数
                 .highlighter(highlightBuilder);//高亮
-
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-
-        List<DiscussPost> list = new LinkedList<>();
+        List<DiscussPost> list = new ArrayList<>();
+        long total = searchResponse.getHits().getTotalHits().value;
         for (SearchHit hit : searchResponse.getHits().getHits()) {
             DiscussPost discussPost = JSONObject.parseObject(hit.getSourceAsString(), DiscussPost.class);
 
@@ -278,8 +277,16 @@ public class ElasticSearchTest {
             if (contentField != null) {
                 discussPost.setContent(contentField.getFragments()[0].toString());
             }
-            System.out.println(discussPost);
+//            System.out.println(discussPost);
             list.add(discussPost);
+        }
+        res.put("list",list);
+        res.put("total",total);
+        if(res.get("list")!= null){
+            for (DiscussPost post : list = (List<DiscussPost>) res.get("list")) {
+                System.out.println(post);
+            }
+            System.out.println(res.get("total"));
         }
     }
 }
