@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
@@ -99,13 +98,13 @@ public class LoginController implements CommunityConstant {
 //        session.setAttribute("kaptcha", text);
 
         // redis - 验证码的归属
-        String kaptchOwner = CommunityUtil.generateUUID();
-        Cookie cookie = new Cookie("kaptchaOwner", kaptchOwner);
+        String kaptchaOwner = CommunityUtil.generateUUID();
+        Cookie cookie = new Cookie("kaptchaOwner", kaptchaOwner);
         cookie.setMaxAge(60);
         cookie.setPath(contextPath);
         response.addCookie(cookie);
         // 将验证码存入redis
-        String redisKey = RedisKeyUtil.getKaptchaKey(kaptchOwner);
+        String redisKey = RedisKeyUtil.getKaptchaKey(kaptchaOwner);
         redisTemplate.opsForValue().set(redisKey, text, 60, TimeUnit.SECONDS);
 
         // 将图片输出给浏览器
@@ -115,7 +114,7 @@ public class LoginController implements CommunityConstant {
             ImageIO.write(image, "png", os);
         } catch (IOException e) {
             logger.error("响应验证码失败：" + e.getMessage());
-            e.printStackTrace();
+//            e.printStackTrace();
         }
     }
 

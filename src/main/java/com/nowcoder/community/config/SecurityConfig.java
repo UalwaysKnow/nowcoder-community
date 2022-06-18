@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                         if ("XMLHttpRequest".equals(xRequestedWith)) {
                             response.setContentType("application/plain;charset=utf-8");
                             PrintWriter writer = response.getWriter();
-                            writer.write(CommunityUtil.getJSONString(403, "你还没有登录哦!"));
+                            writer.write(CommunityUtil.getJSONString(403, "你还没有登录!"));
                         } else {
                             response.sendRedirect(request.getContextPath() + "/login");
                         }

@@ -1,6 +1,5 @@
 package com.nowcoder.community.controller;
 
-import com.nowcoder.community.dao.CommentMapper;
 import com.nowcoder.community.entity.Comment;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Event;
@@ -53,7 +52,7 @@ public class CommentController implements CommunityConstant {
                 .setEntityId(comment.getEntityId())
                 .setData("postId", discussPostId);
 
-        if(comment.getEntityType() == ENTITY_TYPE_POST) {
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
             DiscussPost target = discussPostService.findDiscussPostById(comment.getEntityId());
             event.setEntityUserId(target.getUserId());
         } else if (comment.getEntityType() == ENTITY_TYPE_COMMENT) {

@@ -23,7 +23,7 @@
             order by type desc, create_time desc
         </if>
         <if test="orderMode==1">
-            order by type desc, score desc create_time desc
+            order by type desc, score desc, create_time desc
         </if>
         limit #{offset}, #{limit}
     </select>
